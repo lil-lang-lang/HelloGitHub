@@ -6,9 +6,11 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="HelloGitHub" />
         <module name="lil" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="HelloGitHub" target="6" />
+    </bytecodeTargetLevel>
   </component>
 </project>
