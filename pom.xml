@@ -16,11 +16,11 @@
     <maven.compiler.source>1.7</maven.compiler.source>
     <maven.compiler.target>1.7</maven.compiler.target>
   </properties>
-<!--<repository>
+<repository>
     <id>alimaven</id>
     <name>aliyun maven</name>
     <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
-</repository>-->
+</repository>
 
   <dependencies>
     <dependency>
