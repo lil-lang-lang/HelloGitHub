@@ -3,14 +3,12 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-
   <groupId>org.example</groupId>
   <artifactId>lil</artifactId>
   <version>1.0-SNAPSHOT</version>
   <packaging>war</packaging>
 
   <name>lil Maven Webapp</name>
-  <!-- FIXME change it to the project's website -->
   <url>http://www.example.com</url>
 
   <properties>
@@ -18,6 +16,11 @@
     <maven.compiler.source>1.7</maven.compiler.source>
     <maven.compiler.target>1.7</maven.compiler.target>
   </properties>
+<!--<repository>
+    <id>alimaven</id>
+    <name>aliyun maven</name>
+    <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
+</repository>-->
 
   <dependencies>
     <dependency>
@@ -25,6 +28,16 @@
       <artifactId>junit</artifactId>
       <version>4.11</version>
       <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.testng</groupId>
+      <artifactId>testng</artifactId>
+      <version>6.9.10</version>
+    </dependency>
+    <dependency>
+      <groupId>io.qameta.allure</groupId>
+      <artifactId>allure-testng</artifactId>
+      <version>2.8.1</version>
     </dependency>
   </dependencies>
 
@@ -61,6 +74,51 @@
           <artifactId>maven-deploy-plugin</artifactId>
           <version>2.8.2</version>
         </plugin>
+        <!-- https://mvnrepository.com/artifact/io.qameta.allure/allure-maven -->
+        <plugin>
+          <groupId>io.qameta.allure</groupId>
+          <artifactId>allure-maven</artifactId>
+          <version>2.8</version>
+        </plugin>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <configuration>
+            <source>6</source>
+            <target>6</target>
+          </configuration>
+        </plugin>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-surefire-plugin</artifactId>
+          <version>2.18.1</version>
+          <configuration>
+            <!--为了解决在jenkins maven执行test 报告乱码问题，编码格式设置为UTF-8-->
+            <argLine>-Dfile.encoding=UTF-8</argLine>
+            <!--suppress UnresolvedMavenProperty -->
+            <argLine>
+              -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
+            </argLine>
+            <suiteXmlFiles>
+              <suiteXmlFile>src/main/resources/testng.xml</suiteXmlFile>
+            </suiteXmlFiles>
+
+            <properties>
+              <property>
+                <name>usedefaultlisteners</name>
+                <value>false</value>
+              </property>
+            </properties>
+            <!-- 使allure-results在target文件夹下（很重要） -->
+            <workingDirectory>target/</workingDirectory>
+          </configuration>
+          <dependencies>
+
+          </dependencies>
+        </plugin>
+
       </plugins>
     </pluginManagement>
   </build>
